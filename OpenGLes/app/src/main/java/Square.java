@@ -8,17 +8,14 @@ import java.nio.ShortBuffer;
 public class Square {
 
     private final String vertexShaderCode =
-            "attribute vec4 vPosition;" +
+            "uniform mat4 uMVPMatrix;" +
+                    "attribute vec4 vPosition;" +
                     "void main() {" +
-                    "  gl_Position = vPosition;" +
+                    "  gl_Position = uMVPMatrix * vPosition;" +
                     "}";
 
-    private final String fragmentShaderCode =
-            "precision mediump float;" +
-                    "uniform vec4 vColor;" +
-                    "void main() {" +
-                    "  gl_FragColor = vColor;" +
-                    "}";
+    // Use to access and set the view transformation
+    private int vPMatrixHandle;
 
     private FloatBuffer vertexBuffer;
     private ShortBuffer drawListBuffer;
@@ -89,9 +86,14 @@ public class Square {
         // Sets color
         GLES20.glUniform4fv(colorHandle, 1, color, 0);
 
-        // This will draw the Square
+        vPMatrixHandle = GLES20.glGetUniformLocation(program, "uMVPMatrix");
+
+        GLES20.glUniformMatrix4fv(vPMatrixHandle, 1, false, mvpMatrix, 0);
+
+        // Draw the triangle
         GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, vertexCount);
 
+        // Disable vertex array
         GLES20.glDisableVertexAttribArray(positionHandle);
     }
 }
