@@ -13,6 +13,12 @@ public class Square {
                     "void main() {" +
                     "  gl_Position = uMVPMatrix * vPosition;" +
                     "}";
+    private final String fragmentShaderCode =
+            "precision mediump float;" +
+                    "uniform vec4 vColor;" +
+                    "void main() {" +
+                    "  gl_FragColor = vColor;" +
+                    "}";
 
     // Use to access and set the view transformation
     private int vPMatrixHandle;
@@ -69,7 +75,7 @@ public class Square {
     private final int vertexCount = squareCoords.length / COORDS_PER_VERTEX;
     private final int vertexStride = COORDS_PER_VERTEX * 4; // 4 bytes per vertex
 
-    public void draw() {
+    public void draw(float[] mvpMatrix) {
 
         GLES20.glUseProgram(mProgram);
 
@@ -86,7 +92,7 @@ public class Square {
         // Sets color
         GLES20.glUniform4fv(colorHandle, 1, color, 0);
 
-        vPMatrixHandle = GLES20.glGetUniformLocation(program, "uMVPMatrix");
+        vPMatrixHandle = GLES20.glGetUniformLocation(mProgram, "uMVPMatrix");
 
         GLES20.glUniformMatrix4fv(vPMatrixHandle, 1, false, mvpMatrix, 0);
 
