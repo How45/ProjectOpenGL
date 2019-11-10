@@ -5,7 +5,7 @@ import android.opengl.Matrix;
 
 import javax.microedition.khronos.opengles.GL10;
 
-class MyGLSurfaceView extends GLSurfaceView {
+public MyGLSurfaceView(Context context) extends GLSurfaceView {
 
     private final MyGLRenderer renderer;
 
