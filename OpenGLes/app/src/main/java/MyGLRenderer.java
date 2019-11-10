@@ -11,13 +11,21 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     }
     private Square   mSquare;
 
+    private float[] rotationMatrix = new float[16];
+    Override
     public void onDrawFrame(GL10 unused) {
+        float[] scratch = new float[16];
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
 
         Matrix.setLookAtM(viewMatrix, 0, 0, 0, -3, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
         Matrix.multiplyMM(vPMatrix, 0, projectionMatrix, 0, viewMatrix, 0);
 
+        ong time = SystemClock.uptimeMillis() % 4000L;
+        float angle = 0.090f * ((int) time);
+        Matrix.setRotateM(rotationMatrix, 0, angle, 0, -1.0f, 0);
 
+
+        Matrix.multiplyMM(scratch, 0, vPMatrix, 0, rotationMatrix, 0);
         mSquare.draw(vPMatrix);
 
     }
