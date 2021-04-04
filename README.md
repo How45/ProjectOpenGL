@@ -1,2 +1,1 @@
-# ProjectOpenGL
-# A progject during my work exeriance
+# A render of a Square, whiles working for a work experiance in the summer back in 2018
