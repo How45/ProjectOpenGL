@@ -1,1 +1,1 @@
-# A render of a Square, whiles working for a work experiance in the summer back in 2018
+# A render of a Square, while working for a work experience in the summer back in 2018
